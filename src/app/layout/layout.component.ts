@@ -7,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
   selector: 'app-layout',
   imports: [RouterOutlet, SidebarComponent, HeaderComponent],
   templateUrl: './layout.component.html',
-  styleUrl: './layout.component.scss'
+  styleUrl: './layout.component.scss',
 })
 export class LayoutComponent {
   isSidebarOpen = false;

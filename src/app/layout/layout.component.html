@@ -1,8 +1,7 @@
 <div class="relative min-h-screen bg-white dark:bg-gray-900">
-    <app-header (toggleSidebarEvent)="toggleSidebar()"></app-header>
-    <app-sidebar [isSidebarOpen]="isSidebarOpen" (closeSidebar)="closeSidebar()"></app-sidebar>
-    <main class="p-4 sm:ml-64">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-  
+  <app-header (toggleSidebarEvent)="toggleSidebar()"></app-header>
+  <app-sidebar [isSidebarOpen]="isSidebarOpen" (closeSidebar)="closeSidebar()"></app-sidebar>
+  <main class="p-4 sm:ml-64">
+    <router-outlet></router-outlet>
+  </main>
+</div>
