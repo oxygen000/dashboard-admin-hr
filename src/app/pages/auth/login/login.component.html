@@ -1,0 +1,107 @@
+<div class="bg-gray-100 dark:bg-gray-900 flex justify-center items-center h-screen overflow-hidden">
+    <div class="w-1/2 h-full hidden lg:block">
+      <img src="./login.jpg" alt="Placeholder Image" class="object-cover w-full h-full" />
+    </div>
+    <div class="lg:p-36 md:p-28 sm:p-16 p-8 w-full lg:w-1/2">
+      <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">Login</h1>
+      <hr class="my-4 border-gray-300 dark:border-gray-700" />
+      <form>
+        <div class="mb-4">
+          <label for="Email" class="block text-gray-600 dark:text-gray-300 mb-1">Email</label>
+          <input
+            type="text"
+            id="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            placeholder="Email"
+            class="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
+            autocomplete="off"
+          />
+        </div>
+        <div class="mb-4 relative">
+          <label for="password" class="block text-gray-600 dark:text-gray-300 mb-1">Password</label>
+  
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            id="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            placeholder="Password"
+            class="w-full border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-md py-2 px-3 pr-10 focus:outline-none focus:border-blue-500"
+            autocomplete="off"
+          />
+          <button
+            type="button"
+            (click)="togglePasswordVisibility()"
+            class="absolute right-3 duration-300 top-9 text-gray-500 hover:text-gray-700 dark:hover:text-white focus:outline-none"
+          >
+            <span *ngIf="!showPassword"
+              ><svg class="w-6 h-6" viewBox="0 0 32 32">
+                <g
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                >
+                  <circle cx="17" cy="15" r="1" />
+                  <circle cx="16" cy="16" r="6" />
+                  <path d="M2 16S7 6 16 6s14 10 14 10s-5 10-14 10S2 16 2 16" />
+                </g></svg
+            ></span>
+            <span *ngIf="showPassword"
+              ><svg class="w-6 h-6" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M2 5.27L3.28 4L20 20.72L18.73 22l-3.08-3.08c-1.15.38-2.37.58-3.65.58c-5 0-9.27-3.11-11-7.5c.69-1.76 1.79-3.31 3.19-4.54zM12 9a3 3 0 0 1 3 3a3 3 0 0 1-.17 1L11 9.17A3 3 0 0 1 12 9m0-4.5c5 0 9.27 3.11 11 7.5a11.8 11.8 0 0 1-4 5.19l-1.42-1.43A9.86 9.86 0 0 0 20.82 12A9.82 9.82 0 0 0 12 6.5c-1.09 0-2.16.18-3.16.5L7.3 5.47c1.44-.62 3.03-.97 4.7-.97M3.18 12A9.82 9.82 0 0 0 12 17.5c.69 0 1.37-.07 2-.21L11.72 15A3.064 3.064 0 0 1 9 12.28L5.6 8.87c-.99.85-1.82 1.91-2.42 3.13"
+                /></svg
+            ></span>
+          </button>
+        </div>
+  
+        <div class="mb-4 flex items-center justify-between">
+          <div class="flex items-center">
+            <input type="checkbox" id="remember" name="remember" class="text-blue-500" />
+            <label for="remember" class="text-gray-600 dark:text-gray-300 ml-2">Remember Me</label>
+          </div>
+          <div class="text-blue-500">
+            <a routerLink="/forgot-password" class="hover:underline text-sm">Forgot Password?</a>
+          </div>
+        </div>
+        <button
+          type="button"
+          (click)="onSubmit()"
+          [disabled]="loading"
+          class="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full transition duration-200 flex items-center justify-center gap-2"
+        >
+          <svg *ngIf="!loading" width="20" height="20" viewBox="0 0 20 20">
+            <path
+              fill="currentColor"
+              d="M9.76 0C15.417 0 20 4.477 20 10S15.416 20 9.76 20c-3.191 0-6.142-1.437-8.07-3.846a.644.644 0 0 1 .115-.918a.68.68 0 0 1 .94.113a8.96 8.96 0 0 0 7.016 3.343c4.915 0 8.9-3.892 8.9-8.692s-3.985-8.692-8.9-8.692a8.96 8.96 0 0 0-6.944 3.255a.68.68 0 0 1-.942.101a.644.644 0 0 1-.103-.92C3.703 1.394 6.615 0 9.761 0m.545 6.862l2.707 2.707c.262.262.267.68.011.936L10.38 13.15a.66.66 0 0 1-.937-.011a.66.66 0 0 1-.01-.937l1.547-1.548l-10.31.001A.66.66 0 0 1 0 10c0-.361.3-.654.67-.654h10.268L9.38 7.787a.66.66 0 0 1-.01-.937a.66.66 0 0 1 .935.011"
+            />
+          </svg>
+          <svg *ngIf="loading" class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24">
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="white"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="white"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+            ></path>
+          </svg>
+          {{ loading ? 'Logging in...' : 'Login' }}
+        </button>
+        <div *ngIf="errorMessage" class="text-red-500 text-sm mt-4">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="text-green-500 text-sm mt-4">{{ successMessage }}</div>
+      </form>
+    </div>
+  </div>
+  
