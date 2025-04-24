@@ -24,4 +24,11 @@ export class HeaderComponent {
   toggleNotification() {
     this.isNotificationOpen = !this.isNotificationOpen;
   }
+  notifications: Array<{
+    avatar: string;
+    name: string;
+    message: string;
+    time: string;
+    type: string;
+  }> = [];
 }

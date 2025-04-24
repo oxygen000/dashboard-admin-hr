@@ -19,6 +19,7 @@ export class LoginComponent {
   successMessage: string = '';
   loading: boolean = false;
   showPassword: boolean = false;
+  show: boolean = true;
 
   constructor(
     private router: Router,
