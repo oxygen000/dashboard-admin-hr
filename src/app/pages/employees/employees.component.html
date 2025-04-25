@@ -67,11 +67,10 @@
 
 <!-- Modal -->
 <div *ngIf="isModalOpen" class="fixed inset-0 z-50 bg-black/70 flex items-center justify-center" (click)="closeModal($event)">
-  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md relative" (click)="$event.stopPropagation()">
-    <button (click)="closeModal()" class="absolute top-3 left-3 text-gray-500 hover:text-gray-800 dark:hover:text-white text-lg">×</button>
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-4xl relative" (click)="$event.stopPropagation()">
 
     <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">{{ isEdit ? 'Edit Employee' : 'Add New Employee' }}</h2>
-    <form (ngSubmit)="submitForm()" #form="ngForm">
+    <form (ngSubmit)="submitForm()" #form="ngForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <div class="mb-4">
         <label class="block mb-1 text-gray-700 dark:text-gray-300">Full Name</label>
         <input type="text" [(ngModel)]="employeeForm.name" name="name" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
@@ -96,7 +95,7 @@
         <label class="block mb-1 text-gray-700 dark:text-gray-300">Hire Date</label>
         <input type="date" [(ngModel)]="employeeForm.hireDate" name="hireDate" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
       </div>
-      <div class="flex justify-end gap-2">
+      <div class="md:col-span-2 flex justify-end gap-2 mt-4">
         <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-white rounded-md hover:bg-gray-400">Cancel</button>
         <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save</button>
       </div>

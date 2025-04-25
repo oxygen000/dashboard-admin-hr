@@ -1,12 +1,102 @@
-<section class="w-full mt-20 p-8 bg-white dark:bg-gray-900">
+<section class="w-full mt-20 p-8 bg-white dark:bg-gray-900 min-h-screen">
+  <!-- Breadcrumb -->
   <nav class="text-gray-700 text-sm mb-6" aria-label="Breadcrumb">
     <ol class="list-reset flex">
-      <a routerLink="/dashboard" class="text-black dark:text-white">Dashboard</a>
+      <a href="/dashboard" class="text-black dark:text-white ">Dashboard</a>
       <li class="mx-2 text-gray-500 dark:text-gray-400">/</li>
       <li class="text-gray-600 dark:text-gray-300">Leave Requests</li>
     </ol>
   </nav>
 
-  <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">Leave Requests</h1>
+  <!-- Page Title -->
+  <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-2">Leave Requests</h1>
   <p class="text-2xl text-gray-700 dark:text-gray-300 mb-8">Welcome to the Leave Requests</p>
+
+  <!-- Add New Leave Request Button -->
+  <button (click)="toggleModal()"  class="mb-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
+    + New Leave Request
+  </button>
+
+  <!-- Leave Requests Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full bg-white dark:bg-gray-800 text-sm rounded-lg overflow-hidden shadow-md">
+      <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+        <tr >
+          <th class="py-3 px-6 text-left">Name</th>
+          <th class="py-3 px-6 text-left">Department</th>
+          <th class="py-3 px-6 text-left">Start</th>
+          <th class="py-3 px-6 text-left">End</th>
+          <th class="py-3 px-6 text-left">Leave Type</th>
+          <th class="py-3 px-6 text-left">Status</th>
+          <th class="py-3 px-6 text-left">Reason</th>
+          <th class="py-3 px-6 text-left">Actions</th>
+        </tr>
+      </thead>
+      
+      <tbody class="text-gray-700 dark:text-gray-200">
+         <!-- Display message if no employees -->
+         <tr *ngIf="filteredLeaveRequest.length === 0">
+          <td colspan="5" class="text-center py-6 text-gray-500">No employees available</td>
+        </tr>
+
+        <tr *ngFor="let emp of leaveRequest" class="border-t dark:border-gray-700">
+          <td class="p-2">{{ emp.name }}</td>
+          <td class="p-2">{{ emp.department }}</td>
+          <td class="p-2">{{ emp.startDate }}</td>
+          <td class="p-2">{{ emp.endDate }}</td>
+          <td class="p-2">{{ emp.leaveType }}</td>
+          <td class="p-2">{{ emp.status }}</td>
+          <td class="p-2">{{ emp.reason }}</td>
+          <td class="py-3 px-6 flex gap-2">
+            <button (click)="editLeaveRequest(emp)" class="text-blue-600 hover:text-blue-700 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M21.455 5.416a.75.75 0 0 1-.096.943l-9.193 9.192a.75.75 0 0 1-.34.195l-3.829 1a.75.75 0 0 1-.915-.915l1-3.828a.8.8 0 0 1 .161-.312L17.47 2.47a.75.75 0 0 1 1.06 0l2.829 2.828a1 1 0 0 1 .096.118m-1.687.412L18 4.061l-8.518 8.518l-.625 2.393l2.393-.625z" clip-rule="evenodd"/><path fill="currentColor" d="M19.641 17.16a44.4 44.4 0 0 0 .261-7.04a.4.4 0 0 1 .117-.3l.984-.984a.198.198 0 0 1 .338.127a46 46 0 0 1-.21 8.372c-.236 2.022-1.86 3.607-3.873 3.832a47.8 47.8 0 0 1-10.516 0c-2.012-.225-3.637-1.81-3.873-3.832a46 46 0 0 1 0-10.67c.236-2.022 1.86-3.607 3.873-3.832a48 48 0 0 1 7.989-.213a.2.2 0 0 1 .128.34l-.993.992a.4.4 0 0 1-.297.117a46 46 0 0 0-6.66.255a2.89 2.89 0 0 0-2.55 2.516a44.4 44.4 0 0 0 0 10.32a2.89 2.89 0 0 0 2.55 2.516c3.355.375 6.827.375 10.183 0a2.89 2.89 0 0 0 2.55-2.516"/></svg></button>
+            <button (click)="deleteLeaveRequest(emp)" class="text-red-600 hover:text-red-700 cursor-pointer"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m19.5 5.5l-.62 10.025c-.158 2.561-.237 3.842-.88 4.763a4 4 0 0 1-1.2 1.128c-.957.584-2.24.584-4.806.584c-2.57 0-3.855 0-4.814-.585a4 4 0 0 1-1.2-1.13c-.642-.922-.72-2.205-.874-4.77L4.5 5.5M3 5.5h18m-4.944 0l-.683-1.408c-.453-.936-.68-1.403-1.071-1.695a2 2 0 0 0-.275-.172C13.594 2 13.074 2 12.035 2c-1.066 0-1.599 0-2.04.234a2 2 0 0 0-.278.18c-.395.303-.616.788-1.058 1.757L8.053 5.5m1.447 11v-6m5 6v-6" color="currentColor"/></svg></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div> 
+
+<!-- Modal -->
+<div *ngIf="isModalOpen" class="fixed inset-0 z-50 bg-black/70 flex items-center justify-center" (click)="closeModal($event)">
+  <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-4xl relative" (click)="$event.stopPropagation()">
+
+    <h2 class="text-2xl font-bold mb-6 text-gray-800 dark:text-white">{{ isEdit ? 'Edit Employee' : 'Add New Employee' }}</h2>
+    
+    <form (ngSubmit)="submitForm()" #form="ngForm" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Full Name</label>
+        <input type="text" [(ngModel)]="LeaveRequestForm.name" name="name" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
+      </div>
+      <div>
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Department</label>
+        <input type="text" [(ngModel)]="LeaveRequestForm.department" name="department" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
+      </div>
+      <div>
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Start Date</label>
+        <input type="date" [(ngModel)]="LeaveRequestForm.startDate" name="startDate" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
+      </div>
+      <div>
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">End Date</label>
+        <input type="date" [(ngModel)]="LeaveRequestForm.endDate" name="endDate" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
+      </div>
+      <div>
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Leave Type</label>
+        <input type="text" [(ngModel)]="LeaveRequestForm.leaveType" name="leaveType" class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
+      </div>
+      <div>
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Status</label>
+        <input type="text" [(ngModel)]="LeaveRequestForm.status" name="status" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
+      </div>
+      <div class="md:col-span-2">
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Reason</label>
+        <input type="text" [(ngModel)]="LeaveRequestForm.reason" name="reason" required class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white" />
+      </div>
+      <div class="md:col-span-2 flex justify-end gap-2 mt-4">
+        <button type="button" (click)="closeModal()" class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-white rounded-md hover:bg-gray-400">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 </section>

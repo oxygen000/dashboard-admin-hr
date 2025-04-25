@@ -1,12 +1,78 @@
 <section class="w-full mt-20 p-8 bg-white dark:bg-gray-900">
+  <!-- Breadcrumb -->
   <nav class="text-gray-700 text-sm mb-6" aria-label="Breadcrumb">
-    <ol class="list-reset flex">
-      <a routerLink="/dashboard" class="text-black dark:text-white">Dashboard</a>
-      <li class="mx-2 text-gray-500 dark:text-gray-400">/</li>
+    <ol class="list-reset flex items-center space-x-2">
+      <li><a routerLink="/dashboard" class="text-black dark:text-white hover:underline">Dashboard</a></li>
+      <li>/</li>
       <li class="text-gray-600 dark:text-gray-300">Tickets</li>
     </ol>
   </nav>
 
-  <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">Tickets</h1>
-  <p class="text-2xl text-gray-700 dark:text-gray-300 mb-8">Welcome to the Tickets</p>
+  <!-- Title and description -->
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-2">Tickets</h1>
+    <p class="text-lg text-gray-700 dark:text-gray-300">Manage and track all support tickets easily.</p>
+  </div>
+
+  <!-- Grid layout with columns -->
+  <div class="flex flex-wrap gap-6 items-center justify-center w-full">
+    <!-- Ticket List -->
+    <div class=" space-y-4 ">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-2">Ticket List</h2>
+      <div class="flex flex-wrap gap-6 w-full justify-center items-center mt-2">
+        <div *ngFor="let ticket of tickets" (click)="selectTicket(ticket)"
+          class="cursor-pointer border border-gray-800 dark:border-gray-200 p-4 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition transform duration-200 ease-in-out w-full sm:w-1/2 lg:w-1/3 xl:w-1/4"
+          [class.bg-gray-800]="selectedTicket?.id === ticket.id">
+          <h3 class="font-semibold text-lg text-gray-800 dark:text-white">{{ ticket.title }}</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-400">{{ ticket.status }}</p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">{{ ticket.date }}</p>
+        </div>
+      </div>
+    </div>
+     <!-- Chart -->
+     <div class=" bg-white dark:bg-gray-800 rounded-md p-4 shadow-md">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-white mb-4">Ticket Stats</h2>
+      <p-chart type="pie" [data]="chartData" [options]="chartOptions" styleClass="w-full h-full"></p-chart>
+    </div>
+
+
+    <!-- Ticket Details -->
+    <div class="bg-gray-50 dark:bg-gray-800 p-6 rounded-md shadow-md w-1/2" *ngIf="selectedTicket">
+      <h3 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">{{ selectedTicket.title }}</h3>
+      <p class="text-gray-700 dark:text-gray-300 mb-6">{{ selectedTicket.description }}</p>
+
+      <!-- Reply Section -->
+      <div class="mb-6">
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Reply</label>
+        <textarea [(ngModel)]="selectedTicket.reply" rows="4"
+          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+      </div>
+
+      <!-- Status Section -->
+      <div class="mb-6">
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Status</label>
+        <select [(ngModel)]="selectedTicket.status"
+          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white">
+          <option value="open">Open</option>
+          <option value="in_progress">In Progress</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+
+      <!-- Time Spent Section -->
+      <div class="mb-6">
+        <label class="block mb-1 text-gray-700 dark:text-gray-300">Time Spent (hrs)</label>
+        <input [(ngModel)]="selectedTicket.timeSpent" type="number" min="0" step="0.1"
+          class="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      </div>
+
+      <!-- Buttons Section -->
+      <div class="flex justify-end gap-4">
+        <button class="px-4 py-2 bg-gray-300 dark:bg-gray-600 text-gray-800 dark:text-white rounded-md hover:bg-gray-400"
+          (click)="cancelReply()">Cancel</button>
+        <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          (click)="submitReply()">Submit Reply</button>
+      </div>
+    </div>
+  </div>
 </section>
