@@ -1,10 +1,230 @@
 <section class="w-full mt-20 p-8 bg-white dark:bg-gray-900">
+
+  <!-- Breadcrumb Navigation -->
   <nav class="text-gray-700 text-sm mb-6" aria-label="Breadcrumb">
     <ol class="list-reset flex">
       <li class="text-black dark:text-white">Dashboard</li>
     </ol>
   </nav>
 
-  <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-4">Dashboard</h1>
-  <p class="text-2xl text-gray-700 dark:text-gray-300 mb-8">Welcome to the dashboard</p>
+  <!-- Page Title & Subtitle -->
+  <h1 class="text-4xl font-bold text-gray-800 dark:text-white mb-2">Dashboard</h1>
+  <p class="text-xl text-gray-700 dark:text-gray-300 mb-8">Welcome to the HR Dashboard</p>
+
+  <!-- Summary Cards Section -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+    <!-- Total Employees -->
+    <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow">
+      <h2 class="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-1">Total Employees</h2>
+      <p class="text-3xl font-bold text-gray-800 dark:text-white">128</p>
+    </div>
+
+    <!-- Total Leaves -->
+    <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow">
+      <h2 class="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-1">Total Leaves</h2>
+      <p class="text-3xl font-bold text-gray-800 dark:text-white">32</p>
+    </div>
+
+    <!-- Leave Requests -->
+    <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow">
+      <h2 class="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-1">Leave Requests</h2>
+      <p class="text-3xl font-bold text-gray-800 dark:text-white">14</p>
+    </div>
+
+    <!-- Monthly Salaries -->
+    <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-xl shadow">
+      <h2 class="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-1">Monthly Salaries</h2>
+      <p class="text-3xl font-bold text-gray-800 dark:text-white">$85,000</p>
+    </div>
+  </div>
+
+  <!-- Notifications Section -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+    <!-- Scheduled Meetings -->
+    <div class="bg-blue-50 dark:bg-blue-900 p-5 rounded-lg shadow">
+      <h3 class="text-lg font-semibold text-blue-700 dark:text-blue-200 mb-2">Scheduled Meetings</h3>
+      <p class="text-sm text-blue-800 dark:text-blue-100">3 meetings scheduled for this week.</p>
+    </div>
+
+    <!-- New Requests -->
+    <div class="bg-green-50 dark:bg-green-900 p-5 rounded-lg shadow">
+      <h3 class="text-lg font-semibold text-green-700 dark:text-green-200 mb-2">New Requests</h3>
+      <p class="text-sm text-green-800 dark:text-green-100">5 new requests need review.</p>
+    </div>
+
+    <!-- System Alerts -->
+    <div class="bg-yellow-50 dark:bg-yellow-900 p-5 rounded-lg shadow">
+      <h3 class="text-lg font-semibold text-yellow-700 dark:text-yellow-200 mb-2">System Alerts</h3>
+      <p class="text-sm text-yellow-800 dark:text-yellow-100">2 new alerts from the system.</p>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="flex flex-col lg:flex-row justify-center items-start gap-8 mb-12">
+    <!-- Employee Performance Chart -->
+    <div class="w-full lg:w-1/2">
+      <h2 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">Employee Performance (Monthly)</h2>
+      <p-chart type="line" [data]="performanceData" [options]="lineChartOptions" styleClass="w-full max-w-md mx-auto"></p-chart>
+    </div>
+
+    <!-- General Statistics Chart -->
+    <div class="w-full lg:w-1/2">
+      <h2 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">General Statistics</h2>
+      <p-chart type="bar" [data]="chartData" [options]="chartOptions" styleClass="w-full max-w-md mx-auto"></p-chart>
+    </div>
+  </div>
+
+  <!-- Latest Requests Table -->
+  <div class="mb-12">
+    <h2 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">Latest Requests</h2>
+    <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow">
+      <table class="min-w-full table-auto text-sm">
+        <thead class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+          <tr>
+            <th class="text-right py-3 px-6">Employee</th>
+            <th class="text-right py-3 px-6">Request Type</th>
+            <th class="text-right py-3 px-6">Date</th>
+            <th class="text-right py-3 px-6">Status</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-800 dark:text-gray-100 divide-y divide-gray-200 dark:divide-gray-700">
+          <!-- Request Row 1 -->
+          <tr>
+            <td class="py-3 px-6 text-right">Ahmed Mostafa</td>
+            <td class="py-3 px-6 text-right">Annual Leave</td>
+            <td class="py-3 px-6 text-right">2025-04-20</td>
+            <td class="py-3 px-6 text-right text-green-600 font-medium">Accepted</td>
+          </tr>
+          <!-- Request Row 2 -->
+          <tr>
+            <td class="py-3 px-6 text-right">Mona Adel</td>
+            <td class="py-3 px-6 text-right">Delegation Request</td>
+            <td class="py-3 px-6 text-right">2025-04-19</td>
+            <td class="py-3 px-6 text-right text-yellow-500 font-medium">Under Review</td>
+          </tr>
+          <!-- Request Row 3 -->
+          <tr>
+            <td class="py-3 px-6 text-right">Youssef Ibrahim</td>
+            <td class="py-3 px-6 text-right">Sick Leave</td>
+            <td class="py-3 px-6 text-right">2025-04-18</td>
+            <td class="py-3 px-6 text-right text-red-500 font-medium">Rejected</td>
+          </tr>
+          <!-- Request Row 4 -->
+          <tr>
+            <td class="py-3 px-6 text-right">Dina Hassan</td>
+            <td class="py-3 px-6 text-right">Remote Work</td>
+            <td class="py-3 px-6 text-right">2025-04-17</td>
+            <td class="py-3 px-6 text-right text-green-600 font-medium">Accepted</td>
+          </tr>
+          <!-- Request Row 5 -->
+          <tr>
+            <td class="py-3 px-6 text-right">Khaled Farouk</td>
+            <td class="py-3 px-6 text-right">Training Leave</td>
+            <td class="py-3 px-6 text-right">2025-04-16</td>
+            <td class="py-3 px-6 text-right text-yellow-500 font-medium">Under Review</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+
+  <!-- Additional Information Section -->
+  <div class="mt-12">
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-8">Additional Information</h2>
+  
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+  
+      <!-- Last Login -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Last Login</h3>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <li>Ahmed Hassan - April 24, 2025 at 09:20 AM</li>
+          <li>Mona Ali - April 23, 2025 at 10:45 AM</li>
+          <li>Omar Mahmoud - April 22, 2025 at 08:10 AM</li>
+        </ul>
+      </div>
+  
+      <!-- Active Users -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Active Users</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mb-2">There are currently 18 active users in the system.</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-2">
+          <li class="flex items-center gap-2">
+            <span>Ahmed Hassan</span>
+            <span class="w-2.5 h-2.5 bg-green-500 rounded-full" title="Active"></span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span>Mona Ali</span>
+            <span class="w-2.5 h-2.5 bg-yellow-400 rounded-full" title="On Break"></span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span>Omar Mahmoud</span>
+            <span class="w-2.5 h-2.5 bg-green-500 rounded-full" title="Active"></span>
+          </li>
+          <li class="flex items-center gap-2">
+            <span>Abdel Hamed Reda</span>
+            <span class="w-2.5 h-2.5 bg-red-500 rounded-full" title="Active"></span>
+          </li>
+        </ul>
+      </div>
+  
+      <!-- Most Active Department -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Most Active Department</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">IT Department</p>
+        <p class="text-sm text-gray-600 dark:text-gray-400 mt-2">This department has shown the highest activity with 9 employees actively engaged in daily tasks.</p>
+      </div>
+  
+      <!-- Upcoming Birthdays -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Upcoming Birthdays</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">There are 4 birthdays this week:</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 mt-2 space-y-1">
+          <li>Ahmed Hassan - April 26, 2025</li>
+          <li>Mona Ali - April 27, 2025</li>
+          <li>Khaled Said - April 29, 2025</li>
+          <li>Reem Tarek - April 30, 2025</li>
+        </ul>
+      </div>
+  
+      <!-- Pending Evaluations -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Pending Evaluations</h3>
+        <p class="text-sm text-gray-600 dark:text-gray-400">7 performance evaluations are awaiting approval:</p>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 mt-2 space-y-1">
+          <li>Ahmed Hassan</li>
+          <li>Mona Ali</li>
+          <li>Omar Mahmoud</li>
+          <li>Ali Zaki</li>
+          <li>Abdallah Gamal</li>
+          <li>Khaled Said</li>
+          <li>Reem Tarek</li>
+        </ul>
+      </div>
+  
+      <!-- Overall Stats -->
+      <div class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+        <h3 class="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">Overall Statistics</h3>
+        <ul class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+          <li>Total Employees: <span class="font-semibold text-gray-900 dark:text-white">120</span></li>
+          <li>Active Employees: <span class="font-semibold text-green-600">18</span></li>
+          <li>On Vacation: <span class="font-semibold text-yellow-500">6</span></li>
+          <li>Late Employees: <span class="font-semibold text-red-500">2</span></li>
+        </ul>
+      </div>
+  
+    </div>
+  </div>
+  
+  
+
+  <!-- Calendar Section -->
+  <div class="mt-12">
+    <h2 class="text-2xl font-semibold text-gray-700 dark:text-white mb-4">Calendar</h2>
+    <!-- Angular Component for Calendar -->
+    <app-calendar></app-calendar>
+  </div>
+
 </section>

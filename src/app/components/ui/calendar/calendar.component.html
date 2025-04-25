@@ -1,0 +1,69 @@
+<div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow w-full max-w-xl mx-auto">
+
+    <!-- Navigation Between Months -->
+    <div class="flex justify-between items-center mb-6">
+        <button (click)="previousMonth()"
+            class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors duration-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+        </button>
+        <h2 class="text-lg font-semibold text-gray-800 dark:text-white">{{ currentMonth }} {{ currentYear }}</h2>
+        <button (click)="nextMonth()"
+            class="bg-gray-200 dark:bg-gray-700 px-4 py-2 rounded hover:bg-gray-300 transition-colors duration-200">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Weekday Headers -->
+    <div class="grid grid-cols-7 gap-4 text-center text-sm font-semibold text-black dark:text-white mb-4">
+        <div *ngFor="let day of weekDays">{{ day }}</div>
+    </div>
+
+    <!-- Calendar Days -->
+    <div class="grid grid-cols-7 gap-2 text-center text-sm text-black dark:text-white">
+        <ng-container *ngFor="let day of days">
+            <div class="p-3 cursor-pointer rounded transition duration-200 relative" *ngIf="day > 0"
+                (click)="selectDay(day)" [ngClass]="{
+                 'bg-blue-600 text-white': isToday(day),
+                 'ring-2 ring-blue-400': selectedDay === day
+               }">
+                <div>{{ day }}</div>
+                <span *ngIf="getDayEvents(day).length"
+                    class="absolute bottom-1 duration-400 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-green-500 rounded-full">
+                </span>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Tasks List for Selected Day -->
+    <div *ngIf="selectedDay !== null && getDayEvents(selectedDay).length" class="mt-6 border-t pt-4">
+        <h3 class="text-md font-semibold mb-2 text-gray-800 dark:text-gray-200">
+            Tasks for {{ selectedDay }} {{ currentMonth }} {{ currentYear }}
+        </h3>
+        <ul class="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+            <li *ngFor="let event of getDayEvents(selectedDay)"
+                class="flex justify-between items-center bg-gray-100 dark:bg-gray-700 p-2 rounded">
+                <span>{{ event }}</span>
+                <button (click)="deleteTask(selectedDay, event)" class="text-red-500 hover:text-red-700">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Add New Task Input -->
+    <div *ngIf="selectedDay !== null" class="mt-6">
+        <input [(ngModel)]="newTask" type="text" placeholder="Add a new task"
+            class="p-3 dark:text-white placeholder:text-gray-500 text-black border border-gray-300 rounded-lg w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-700">
+        <button (click)="addTask()"
+            class="w-full bg-blue-500 text-white p-3 rounded-lg hover:bg-blue-700 duration-400 cursor-pointer transition-colors duration-200">
+            Add Task for {{ selectedDay }} {{ currentMonth }} {{ currentYear }}
+        </button>
+    </div>
+</div>
